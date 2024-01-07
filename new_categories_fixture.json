@@ -1,0 +1,56 @@
+[
+  {
+    "model": "catalog.category",
+    "pk": 7,
+    "fields": {
+      "category_name": "Категория7",
+      "category_description": "Описание категории7",
+      "created_at": null
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 8,
+    "fields": {
+      "category_name": "Категория8",
+      "category_description": "Описание категории8",
+      "created_at": null
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 9,
+    "fields": {
+      "category_name": "Категория9",
+      "category_description": "Описание категории9",
+      "created_at": null
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 10,
+    "fields": {
+      "category_name": "Категория10",
+      "category_description": "Описание категории10",
+      "created_at": null
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 11,
+    "fields": {
+      "category_name": "Категория11",
+      "category_description": "Описание категории11",
+      "created_at": null
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 12,
+    "fields": {
+      "category_name": "Категория12",
+      "category_description": "Описание категории12",
+      "created_at": null
+    }
+  }
+]
