@@ -8,8 +8,8 @@ from catalog.views import index, contacts
 urlpatterns = [
     path('', index),
     path('contacts', contacts),
-    path('admin/', admin.site.urls)
-    path('', include('main.url'))
+    # path('admin/', admin.site.urls),
+    # path('', include('catalog.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
