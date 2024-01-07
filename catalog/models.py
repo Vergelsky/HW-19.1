@@ -16,3 +16,4 @@ class Product(models.Model):
 class Category(models.Model):
     category_name = models.CharField(max_length=120, verbose_name='Название')
     category_description = models.TextField(max_length=600, verbose_name='Описание')
+    created_at = models.DateTimeField(verbose_name='Создано')
