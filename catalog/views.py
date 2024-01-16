@@ -1,6 +1,15 @@
 from django.shortcuts import render
+from django.views.generic import ListView
 
 from catalog.models import Product
+
+
+class ItemsListView(ListView):
+    model = Product
+    extra_context = {
+        'some_text': "Какой-то текст для страницы товаров",
+        'title': "Товары"
+    }
 
 
 # Create your views here.
@@ -22,12 +31,12 @@ def contacts(request):
     return render(request, 'catalog/contacts.html', context)
 
 
-def items(request):
-    items_list = Product.objects.all()
-    context = {
-        'object_list': items_list,
-        'some_text': "Какой-то текст для страницы товаров",
-        'title': "Товары"
-    }
-    print(type(context['object_list'][0]))
-    return render(request, 'catalog/items.html', context)
+# def items(request):
+#     items_list = Product.objects.all()
+#     context = {
+#         'object_list': items_list,
+#         'some_text': "Какой-то текст для страницы товаров",
+#         'title': "Товары"
+#     }
+#     print(type(context['object_list'][0]))
+#     return render(request, 'catalog/items.html', context)

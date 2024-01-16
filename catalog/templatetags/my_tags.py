@@ -14,5 +14,5 @@ def mediapath(val):
     if default_storage.exists(img_url):
         return val.url
     else:
-        return "../static/image_nof_found.png"
+        return "../static/img_nof_found.png"
 

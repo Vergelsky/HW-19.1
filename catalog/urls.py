@@ -4,14 +4,14 @@ from django.contrib import admin
 from django.urls import path, include
 
 from catalog.apps import CatalogConfig
-from catalog.views import index, contacts, items
+from catalog.views import index, contacts, ItemsListView
 
 app_name = CatalogConfig.name
 
 urlpatterns = [
     path('', index, name='index'),
     path('contacts', contacts, name='contacts'),
-    path('items', items, name='items'),
+    path('items', ItemsListView.as_view(), name='items'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
