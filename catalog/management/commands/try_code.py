@@ -19,4 +19,4 @@ class Command(BaseCommand):
 
         result = options['text'].lower().translate(trance_table)
 
-        return slugify(result))
+        return slugify(result)

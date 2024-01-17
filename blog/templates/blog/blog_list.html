@@ -1,0 +1,23 @@
+{% extends 'catalog/base.html' %}
+
+{% block content %}
+
+                <ul class="row list-unstyled justify-content-center">
+                {% for object in object_list %}
+                <li class="col-5 mb-3">
+                    <div class="card card-sm">
+                        <div class="card-body d-flex justify-content-between">
+                          <p class=" h6  m-0">{{object.title|truncatechars:70}}</p>
+                        </div>
+                        <div class="card-footer d-flex justify-content-between">
+                          <p class="m-0">{{object.content|truncatechars:300}}</p>
+                        </div>
+                         <a class="p-2 btn " href={% url 'blog:view' object.pk %}>Открыть</a>
+                         <a class="p-2 btn " href={% url 'blog:edit' object.pk %}>Изменить</a>
+                         <a class="p-2 btn btn-warning" href={% url 'blog:delete' object.pk %}>Удалить</a>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+
+{% endblock %}
