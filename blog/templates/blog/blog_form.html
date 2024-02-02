@@ -1,7 +1,7 @@
 {% extends 'catalog/base.html' %}
 
 {% block content %}
-<div class=" col-12">
+<div class="col-6 mx-auto">
     <form xmlns="http://www.w3.org/1999/html" method="post">
       {% csrf_token %}
       {{form.as_p}}

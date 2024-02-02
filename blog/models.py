@@ -2,7 +2,7 @@ from django.db import models
 
 
 class Blog(models.Model):
-    title = models.CharField(max_length=200, verbose_name='название')
+    blog_title = models.CharField(max_length=200, verbose_name='название')
     content = models.TextField(verbose_name='содержимое')
     image = models.ImageField(verbose_name='изображение', null=True, blank=True)
     created_at = models.DateTimeField(verbose_name='дата создания', null=True, blank=True, auto_now_add=True)
@@ -15,4 +15,4 @@ class Blog(models.Model):
         verbose_name_plural = 'публикации'
 
     def __str__(self):
-        return f'Публикация "{self.title}"'
+        return f'Публикация ""'

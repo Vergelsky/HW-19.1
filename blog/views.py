@@ -3,6 +3,7 @@ from django.views.generic import CreateView, ListView, DetailView, UpdateView, D
 from django.utils.text import slugify
 
 from blog.models import Blog
+from blog.forms import PostForm
 
 
 def rus_to_slug(rus_string):
@@ -26,10 +27,22 @@ def rus_to_slug(rus_string):
     return slugify(result)
 
 
-class BlogCreateView(CreateView):
+class FormValidMixin:
+    def form_valid(self, form):
+        if form.is_valid():
+            new_post = form.save()
+            new_post.slug = rus_to_slug(new_post.blog_title)
+            new_post.save()
+        return super().form_valid(form)
+
+
+class BlogCreateView(FormValidMixin, CreateView):
     model = Blog
-    fields = ('title', 'content')
+    form_class = PostForm
     success_url = reverse_lazy("blog:blog")
+
+
+
     extra_context = {
         'some_text': "Какой-то текст для страницы добавления нового поста",
         'title': "Новый пост"
@@ -38,12 +51,6 @@ class BlogCreateView(CreateView):
     # def get_success_url(self):
     #     return reverse('blog:view', args=[self.kwargs.get('pk')])
 
-    def form_valid(self, form):
-        if form.is_valid():
-            new_post = form.save()
-            new_post.slug = rus_to_slug(new_post.title)
-            new_post.save()
-        return super().form_valid(form)
 
 class BlogListView(ListView):
     model = Blog
@@ -63,7 +70,7 @@ class BlogDetailView(DetailView):
     model = Blog
     extra_context = {
         'some_text': "Какой-то текст для страницы просмотра поста",
-        'title': f"Пост \"\""
+        'title': "Просмотр поста"
     }
 
     def get_object(self, queryset=None):
@@ -73,21 +80,14 @@ class BlogDetailView(DetailView):
         return self.object
 
 
-class BlogUpdateView(UpdateView):
+class BlogUpdateView(FormValidMixin, UpdateView):
     model = Blog
-    fields = ('title', 'content')
+    form_class = PostForm
     # success_url = reverse_lazy("blog:blog")
     extra_context = {
         'some_text': "Какой-то текст для страницы изменения постов",
-        'title': f"Отредактировать пост \"\""
+        'title': f"Отредактировать пост"
     }
-
-    def form_valid(self, form):
-        if form.is_valid():
-            new_post = form.save()
-            new_post.slug = rus_to_slug(new_post.title)
-            new_post.save()
-        return super().form_valid(form)
 
     def get_success_url(self):
         return reverse('blog:view', args=[self.kwargs.get('pk')])
