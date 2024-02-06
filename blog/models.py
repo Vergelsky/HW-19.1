@@ -15,4 +15,18 @@ class Blog(models.Model):
         verbose_name_plural = 'публикации'
 
     def __str__(self):
-        return f'Публикация ""'
+        return f'Публикация \"{self.blog_title}\"'
+
+
+class Version(models.Model):
+    version_title = models.CharField(max_length=200, verbose_name='название')
+    product = models.ForeignKey(Blog, on_delete=models.CASCADE, verbose_name='содержимое')
+    version_number = models.IntegerField(default=0, verbose_name='просмотров')
+    is_current = models.BooleanField(default=True, verbose_name='опубликовано')
+
+    class Meta:
+        verbose_name = 'версия'
+        verbose_name_plural = 'версии'
+
+    def __str__(self):
+        return f'Версия №{self.version_number}, \"{self.blog_title}\"'
