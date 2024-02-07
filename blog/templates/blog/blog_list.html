@@ -17,7 +17,14 @@
                 <a class="p-2 btn btn-info" href={% url 'blog:edit' object.slug %}>Изменить</a>
                 <a class="p-2 btn btn-warning" href={% url 'blog:delete' object.slug %}>Удалить</a>
             </div>
-            <div class="card-footer d-flex justify-content-end">
+            <div class="card-footer d-flex justify-content-between">
+                {% if object.versions.exists %}
+                    {% for vers in object.versions.all %}
+                        {% if vers.is_current %}
+                            <p class="m-0">{{ vers.version_title}}</p>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
                 <p class="m-0 ">Просмотров: {{object.views_count}}</p>
             </div>
         </div>

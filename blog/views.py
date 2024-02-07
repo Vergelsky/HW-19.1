@@ -2,8 +2,8 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
 from django.utils.text import slugify
 
-from blog.models import Blog
-from blog.forms import PostForm
+from blog.models import Blog, Version
+from blog.forms import PostForm, VersionForm
 
 
 def rus_to_slug(rus_string):
@@ -99,4 +99,15 @@ class BlogDeleteView(DeleteView):
     extra_context = {
         'some_text': "Какой-то текст для страницы удаления постов",
         'title': f"Удаляем пост \"\""
+    }
+
+
+class VersionCreateView(CreateView):
+    model = Version
+    form_class = VersionForm
+    success_url = reverse_lazy("blog:blog")
+
+    extra_context = {
+        'some_text': "Какой-то текст для страницы добавления новой версии",
+        'title': "Новая версия"
     }

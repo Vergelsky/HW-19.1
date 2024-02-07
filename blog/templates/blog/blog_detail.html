@@ -10,6 +10,9 @@
         <p class=" m-0">{{object.content}}</p>
     </div>
     <div class="card-footer d-flex justify-content-end">
+        <a href={% url 'blog:new_ver' %} class="m-0 mx-left">Создать версию</a>
+    </div>
+    <div class="card-footer d-flex justify-content-end">
         <p class="m-0 mx-left">Создано: {{ object.created_at }} Просмотров: {{ object.views_count }}</p>
     </div>
     <div class="card-footer d-flex justify-content-center">
