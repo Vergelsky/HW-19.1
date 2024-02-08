@@ -29,31 +29,13 @@ class PostForm(forms.ModelForm):
 
     def clean_blog_title(self):
         # валидатор просто передаёт имя нужного поля
-        # self.cleaning('blog_title')
-        exception_words = ['казино', 'криптовалюта', 'крипта', 'биржа',
-                           'дешево', 'бесплатно', 'обман', 'полиция', 'радар']
+        return self.cleaning('blog_title')
 
-        cleaned_data = self.cleaned_data.get('blog_title')
-
-        for exc_word in exception_words:
-            if exc_word in cleaned_data or exc_word.capitalize() in cleaned_data or exc_word.upper() in cleaned_data:
-                raise forms.ValidationError('Использовано запрещённое слово')
-
-        return cleaned_data
 
     def clean_content(self):
         # валидатор просто передаёт имя нужного поля
-        # self.cleaning('content')
-        exception_words = ['казино', 'криптовалюта', 'крипта', 'биржа',
-                           'дешево', 'бесплатно', 'обман', 'полиция', 'радар']
 
-        cleaned_data = self.cleaned_data.get('content')
-
-        for exc_word in exception_words:
-            if exc_word in cleaned_data or exc_word.capitalize() in cleaned_data or exc_word.upper() in cleaned_data:
-                raise forms.ValidationError('Использовано запрещённое слово')
-
-        return cleaned_data
+        return self.cleaning('content')
 
 
 class VersionForm(forms.ModelForm):

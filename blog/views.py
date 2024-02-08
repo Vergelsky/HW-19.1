@@ -27,7 +27,7 @@ def rus_to_slug(rus_string):
     return slugify(result)
 
 
-class FormValidMixin:
+class FormValidMixin():
     def form_valid(self, form):
         if form.is_valid():
             new_post = form.save()
@@ -83,14 +83,14 @@ class BlogDetailView(DetailView):
 class BlogUpdateView(FormValidMixin, UpdateView):
     model = Blog
     form_class = PostForm
-    # success_url = reverse_lazy("blog:blog")
+    success_url = reverse_lazy("blog:blog")
     extra_context = {
         'some_text': "Какой-то текст для страницы изменения постов",
         'title': f"Отредактировать пост"
     }
 
-    def get_success_url(self):
-        return reverse('blog:view', args=[self.kwargs.get('pk')])
+    # def get_success_url(self):
+    #     return reverse('blog:view', args=[self.kwargs.get('pk')])
 
 
 class BlogDeleteView(DeleteView):
