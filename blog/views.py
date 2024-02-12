@@ -1,3 +1,4 @@
+from django.forms import inlineformset_factory
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
 from django.utils.text import slugify
@@ -81,16 +82,37 @@ class BlogDetailView(DetailView):
 
 
 class BlogUpdateView(FormValidMixin, UpdateView):
+    # template_name = 'blog.blog_update.html'
     model = Blog
     form_class = PostForm
-    success_url = reverse_lazy("blog:blog")
+    # success_url = reverse_lazy("blog:blog")
     extra_context = {
         'some_text': "Какой-то текст для страницы изменения постов",
         'title': f"Отредактировать пост"
     }
 
-    # def get_success_url(self):
-    #     return reverse('blog:view', args=[self.kwargs.get('pk')])
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+
+        VersionFormset = inlineformset_factory(Blog, Version, form=VersionForm, extra=1)
+
+        if self.request.method == 'POST':
+            context_data['formset'] = VersionFormset(self.request.POST, instance=self.object)
+        else:
+            context_data['formset'] = VersionFormset(instance=self.object)
+        return context_data
+
+    def form_valid(self, form):
+        formset = self.get_context_data()['formset']
+
+        if formset.is_valid():
+            formset.instance = form.save()
+            formset.save()
+
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('blog:view', args=[self.object.slug])
 
 
 class BlogDeleteView(DeleteView):

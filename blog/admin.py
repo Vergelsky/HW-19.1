@@ -8,3 +8,4 @@ from blog.models import Version
 @admin.register(Version)
 class VersionAdmin(admin.ModelAdmin):
     list_display = ('version_title', 'product', 'version_number', 'is_current')
+
