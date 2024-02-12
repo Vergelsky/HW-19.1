@@ -82,7 +82,7 @@ class BlogDetailView(DetailView):
 
 
 class BlogUpdateView(FormValidMixin, UpdateView):
-    template_name = 'blog.blog_update.html'
+    template_name = 'blog/blog_update.html'
     model = Blog
     form_class = PostForm
     # success_url = reverse_lazy("blog:blog")
@@ -133,3 +133,6 @@ class VersionCreateView(CreateView):
         'some_text': "Какой-то текст для страницы добавления новой версии",
         'title': "Новая версия"
     }
+
+
+
