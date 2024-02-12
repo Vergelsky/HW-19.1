@@ -39,6 +39,13 @@ class PostForm(forms.ModelForm):
 
 
 class VersionForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+
+                field.widget.attrs['class'] = 'form-control ms-5'
+
     class Meta:
         model = Version
         fields = ('version_title', 'product', 'version_number', 'is_current')
