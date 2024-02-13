@@ -43,8 +43,11 @@ class VersionForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
-
-                field.widget.attrs['class'] = 'form-control ms-5'
+                from django.forms import CheckboxInput
+                if isinstance(field.widget, CheckboxInput):
+                    field.widget.attrs['class'] = 'form-check'
+                else:
+                    field.widget.attrs['class'] = 'form-control'
 
     class Meta:
         model = Version
