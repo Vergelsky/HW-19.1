@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms import inlineformset_factory
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
@@ -37,7 +38,7 @@ class FormValidMixin():
         return super().form_valid(form)
 
 
-class BlogCreateView(FormValidMixin, CreateView):
+class BlogCreateView(FormValidMixin, LoginRequiredMixin, CreateView):
     model = Blog
     form_class = PostForm
     success_url = reverse_lazy("blog:blog")
@@ -51,6 +52,11 @@ class BlogCreateView(FormValidMixin, CreateView):
 
     # def get_success_url(self):
     #     return reverse('blog:view', args=[self.kwargs.get('pk')])
+
+    def form_valid(self, form):
+        new_post = form.save()
+        new_post.author = self.request.user
+        return super().form_valid(form)
 
 
 class BlogListView(ListView):
@@ -81,7 +87,7 @@ class BlogDetailView(DetailView):
         return self.object
 
 
-class BlogUpdateView(FormValidMixin, UpdateView):
+class BlogUpdateView(FormValidMixin, LoginRequiredMixin, UpdateView):
     template_name = 'blog/blog_update.html'
     model = Blog
     form_class = PostForm
@@ -115,7 +121,7 @@ class BlogUpdateView(FormValidMixin, UpdateView):
         return reverse('blog:view', args=[self.object.slug])
 
 
-class BlogDeleteView(DeleteView):
+class BlogDeleteView(LoginRequiredMixin, DeleteView):
     model = Blog
     success_url = reverse_lazy("blog:blog")
     extra_context = {

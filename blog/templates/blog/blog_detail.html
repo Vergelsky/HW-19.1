@@ -9,6 +9,9 @@
     <div class="card-body d-flex justify-content-between">
         <p class=" m-0">{{object.content}}</p>
     </div>
+    <div class="card-body d-flex justify-content-between">
+        <p class=" m-0">Автор: {{object.author}}</p>
+    </div>
     <div class="card-footer d-flex justify-content-end">
         <a href={% url 'blog:new_ver' %} class="m-0 mx-left">Создать версию</a>
     </div>

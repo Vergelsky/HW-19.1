@@ -1,5 +1,7 @@
 from django.db import models
 
+from users.models import User
+
 
 class Blog(models.Model):
     blog_title = models.CharField(max_length=200, verbose_name='название')
@@ -9,6 +11,7 @@ class Blog(models.Model):
     views_count = models.IntegerField(default=0, verbose_name='просмотров')
     is_published = models.BooleanField(default=True, verbose_name='опубликовано')
     slug = models.CharField(max_length=150, verbose_name='slug', null=True, blank=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='автор', null=True, blank=True)
 
     class Meta:
         verbose_name = 'публикация'
