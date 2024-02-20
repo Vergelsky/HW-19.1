@@ -15,5 +15,12 @@
             <a {% if title == 'Наш блог' %} class="d-none" {% endif %}
                 class="p-2 btn btn-outline-primary" href={% url 'blog:blog' %}>Наш блог
             </a>
+            {% if user.is_authenticated %}
+            <a class="p-2 btn btn-outline-primary" href={% url 'user:logout' %}>Выход</a>
+            <a class="p-2 btn btn-outline-primary" href={% url 'user:profile' %}>Профиль</a>
+            {% else %}
+            <a class="p-2 btn btn-outline-primary" href={% url 'user:login' %}>Вход</a>
+
+            {% endif %}
         </nav>
     </div>

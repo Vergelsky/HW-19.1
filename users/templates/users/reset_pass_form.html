@@ -1,0 +1,16 @@
+{% extends 'catalog/base.html' %}
+
+{% block content %}
+
+<div class="col-6 mx-auto">
+    <form xmlns="http://www.w3.org/1999/html" method="post">
+    {% csrf_token %}
+      <label>
+          <p>Введите адрес почты:</p>
+          <input type="email" name="email">
+      </label>
+
+      <button type="submit" class="btn btn-primary">Запросить восстановление пароля</button>
+    </form>
+</div>
+{% endblock %}
