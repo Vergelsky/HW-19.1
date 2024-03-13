@@ -74,10 +74,10 @@ class BlogListView(ListView):
 
     def get_queryset(self, *args, **kwargs):
         queryset = super().get_queryset(*args, **kwargs)
-        if not self.request.user.is_staff:
-            queryset = queryset.filter(is_published=True)
+        if self.request.user.is_staff or self.request.user.has_perm('blog.can_published'):
+            return queryset
+        return queryset.filter(is_published=True)
 
-        return queryset
 
 
 class BlogDetailView(DetailView):
@@ -105,7 +105,7 @@ class BlogUpdateView(FormValidMixin, LoginRequiredMixin, UpdateView):
     }
 
     def get_form_class(self):
-        if self.request.user.has_perm('blog.can_published'):
+        if self.request.user.has_perm('blog.can_published') and self.request.user != self.object.author:
             return PostFormForModerator
         return self.form_class
 
