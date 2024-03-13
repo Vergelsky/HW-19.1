@@ -5,7 +5,7 @@ from django.views.generic import CreateView, ListView, DetailView, UpdateView, D
 from django.utils.text import slugify
 
 from blog.models import Blog, Version
-from blog.forms import PostForm, VersionForm
+from blog.forms import PostForm, VersionForm, PostFormForModerator
 
 
 def rus_to_slug(rus_string):
@@ -33,7 +33,13 @@ class FormValidMixin():
     def form_valid(self, form):
         if form.is_valid():
             new_post = form.save()
-            new_post.slug = rus_to_slug(new_post.blog_title)
+            slug = rus_to_slug(new_post.blog_title)
+            for blog in Blog.objects.all():
+                if slug == rus_to_slug(blog.blog_title):
+                    new_post.slug = slug + 'a'
+                    break
+            else:
+                new_post.slug = slug
             new_post.save()
         return super().form_valid(form)
 
@@ -68,7 +74,8 @@ class BlogListView(ListView):
 
     def get_queryset(self, *args, **kwargs):
         queryset = super().get_queryset(*args, **kwargs)
-        queryset = queryset.filter(is_published=True)
+        if not self.request.user.is_staff:
+            queryset = queryset.filter(is_published=True)
 
         return queryset
 
@@ -96,6 +103,11 @@ class BlogUpdateView(FormValidMixin, LoginRequiredMixin, UpdateView):
         'some_text': "Какой-то текст для страницы изменения постов",
         'title': f"Отредактировать пост"
     }
+
+    def get_form_class(self):
+        if self.request.user.has_perm('blog.can_published'):
+            return PostFormForModerator
+        return self.form_class
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)

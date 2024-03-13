@@ -6,12 +6,18 @@ from blog.models import Blog, Version
 class PostForm(forms.ModelForm):
     class Meta:
         model = Blog
-        fields = ('blog_title', 'content')
+        fields = ('blog_title', 'content', 'is_published')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
-            field.widget.attrs['class'] = 'form-control'
+            from django.forms import CheckboxInput
+            if isinstance(field.widget, CheckboxInput):
+
+                field.widget.attrs['class'] = 'form-check'
+
+            else:
+                field.widget.attrs['class'] = 'form-control'
 
     def cleaning(self, models_field):
         # Вспомогательный метод для валидатора. Он делает всю работу.
@@ -31,7 +37,6 @@ class PostForm(forms.ModelForm):
         # валидатор просто передаёт имя нужного поля
         return self.cleaning('blog_title')
 
-
     def clean_content(self):
         # валидатор просто передаёт имя нужного поля
 
@@ -43,14 +48,32 @@ class VersionForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
-                from django.forms import CheckboxInput
-                if isinstance(field.widget, CheckboxInput):
+            from django.forms import CheckboxInput
+            if isinstance(field.widget, CheckboxInput):
 
-                    field.widget.attrs['class'] = 'form-check'
+                field.widget.attrs['class'] = 'form-check'
 
-                else:
-                    field.widget.attrs['class'] = 'form-control'
+            else:
+                field.widget.attrs['class'] = 'form-control'
 
     class Meta:
         model = Version
         fields = ('version_title', 'product', 'version_number', 'is_current')
+
+
+class PostFormForModerator(forms.ModelForm):
+    class Meta:
+        model = Blog
+        fields = ('blog_title', 'content', 'is_published')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            from django.forms import CheckboxInput
+            if isinstance(field.widget, CheckboxInput):
+                field.widget.attrs['class'] = 'form-check'
+            else:
+                field.widget.attrs['class'] = 'form-control'
+            if field_name in ('blog_title', 'content'):
+                field.widget.attrs['readonly'] = True
+

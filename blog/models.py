@@ -16,6 +16,14 @@ class Blog(models.Model):
     class Meta:
         verbose_name = 'публикация'
         verbose_name_plural = 'публикации'
+        permissions = [
+            (
+                'can_published',
+                'Может публиковать посты (кастомное)'
+            )
+        ]
+
+
 
     def __str__(self):
         return f'Публикация \"{self.blog_title}\"'

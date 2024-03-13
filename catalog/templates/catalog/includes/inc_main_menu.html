@@ -16,7 +16,10 @@
                 class="p-2 btn btn-outline-primary" href={% url 'blog:blog' %}>Наш блог
             </a>
             {% if user.is_authenticated %}
-            <a class="p-2 btn btn-outline-primary" href={% url 'user:logout' %}>Выход</a>
+            <form class="d-inline" action="{% url 'user:logout' %}" id="logout-form" method="POST">
+                    {% csrf_token %}
+                    <button form="logout-form" type="submit" class="p-2 btn btn-outline-primary">Выход</button>
+            </form>
             <a class="p-2 btn btn-outline-primary" href={% url 'user:profile' %}>Профиль</a>
             {% else %}
             <a class="p-2 btn btn-outline-primary" href={% url 'user:login' %}>Вход</a>
