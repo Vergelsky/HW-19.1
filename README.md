@@ -4,3 +4,4 @@ python manage.py create_test_users - создать юзера и модерат
 
 пароль у всех 1qaz2wsx
 
+рабочий образец переменных окружения в env_example

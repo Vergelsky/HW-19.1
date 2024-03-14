@@ -1,0 +1,17 @@
+CACHE_LOCATION = "redis://127.0.0.1:6379"
+CACHE_ENABLED = 'True'
+
+EMAIL_BACKEND = 'django_smtp_ssl.SSLEmailBackend'
+
+EMAIL_HOST = 'smtp.mail.ru'
+EMAIL_PORT = '465'
+
+EMAIL_HOST_USER = 'skyprothebest@mail.ru'
+EMAIL_HOST_PASSWORD = 'L38Shb5XVGehbWNH1rZX'
+
+DJANGO_SECRET_KEY = 'django-insecure-&ae_f8txy74l@4st-l0d@xo%bg-brz%=w9&d5evhxfdq_l1*sq'
+
+DB_ENGINE = 'django.db.backends.postgresql_psycopg2'
+DB_NAME = 'shop'  # Название БД
+DB_USER = 'postgres'  # Пользователь для подключения
+DB_PASSWORD = '5455'  # Пароль для этого пользователя

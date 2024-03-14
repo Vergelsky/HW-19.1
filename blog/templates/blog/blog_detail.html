@@ -19,9 +19,10 @@
         <p class="m-0 mx-left">Создано: {{ object.created_at }} Просмотров: {{ object.views_count }}</p>
     </div>
     <div class="card-footer d-flex justify-content-center">
-
-        <a class="p-2 btn btn-info" href={% url 'blog:edit' object.slug %}>Изменить</a>
-        <a class="p-2 btn btn-warning" href={% url 'blog:delete' object.slug %}>Удалить</a>
+                {% if object.author == user or user.is_staff or perms.blog.can_published %}
+                    <a class="p-2 btn btn-info" href={% url 'blog:edit' object.slug %}>Изменить</a>
+                    <a class="p-2 btn btn-warning" href={% url 'blog:delete' object.slug %}>Удалить</a>
+                {% endif %}
     </div>
     <div class="card-footer d-flex justify-content-between">
         {% if object.versions.exists %}

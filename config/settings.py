@@ -12,24 +12,26 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
-
+from dotenv import load_dotenv
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+
+load_dotenv(BASE_DIR / '.env')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-^l=&$4^1mia2+wh67fu%n0vutts0@0=3984!a9s_^9@-r!6x4j'
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 
-CACHE_ENABLED = True
+CACHE_ENABLED = os.getenv('CACHE_ENABLED')
 
 if CACHE_ENABLED:
     CACHES = {
         "default": {
             "BACKEND": "django.core.cache.backends.redis.RedisCache",
-            "LOCATION": "redis://127.0.0.1:6379",
+            "LOCATION": os.getenv('CACHE_LOCATION'),
         }
     }
 
@@ -38,13 +40,13 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-EMAIL_BACKEND = 'django_smtp_ssl.SSLEmailBackend'
+EMAIL_BACKEND = os.getenv('EMAIL_BACKEND')
 
-EMAIL_HOST = 'smtp.mail.ru'
-EMAIL_PORT = 465
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_PORT = os.getenv('EMAIL_PORT')
 
-EMAIL_HOST_USER = 'skyprothebest@mail.ru'
-EMAIL_HOST_PASSWORD = 'L38Shb5XVGehbWNH1rZX'
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 
 EMAIL_USE_SSL = True
 EMAIL_SSL_CERTFILE = None
@@ -108,10 +110,10 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'shop',  # Название БД
-        'USER': 'postgres',  # Пользователь для подключения
-        'PASSWORD': '5455',  # Пароль для этого пользователя
+        'ENGINE': os.getenv('DB_ENGINE'),
+        'NAME': os.getenv('DB_NAME'),  # Название БД
+        'USER': os.getenv('DB_USER'),  # Пользователь для подключения
+        'PASSWORD': os.getenv('DB_PASSWORD'),  # Пароль для этого пользователя
         # 'HOST': '127.0.0.1',  # Адрес, на котором развернут сервер БД
         # 'PORT': 5432,  # Порт, на котором работает сервер БД
     }
