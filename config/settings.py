@@ -23,6 +23,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-^l=&$4^1mia2+wh67fu%n0vutts0@0=3984!a9s_^9@-r!6x4j'
 
+CACHE_ENABLED = True
+
+if CACHE_ENABLED:
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.redis.RedisCache",
+            "LOCATION": "redis://127.0.0.1:6379",
+        }
+    }
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
