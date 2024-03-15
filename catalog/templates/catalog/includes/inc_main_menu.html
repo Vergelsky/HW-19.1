@@ -6,8 +6,11 @@
             <a {% if title == 'Контакты' %} class="d-none" {% endif %}
                 class="p-2 btn btn-outline-primary" href={% url 'catalog:contacts' %}>Контакты
             </a>
+            <a {% if title == 'Новый товар' %} class="d-none" {% endif %}
+                class="p-2 btn btn-outline-primary" href={% url 'catalog:new' %}>Новый товар
+            </a>
             <a {% if title == 'Товары' %} class="d-none" {% endif %}
-                class="p-2 btn btn-outline-primary" href={% url 'catalog:items' %}>Товары
+                class="p-2 btn btn-outline-primary" href={% url 'catalog:catalog' %}>Товары
             </a>
             <a {% if title == 'Новый пост' %} class="d-none" {% endif %}
                 class="p-2 btn btn-outline-primary" href={% url 'blog:new' %}>Новый пост

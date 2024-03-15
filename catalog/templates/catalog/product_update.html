@@ -1,0 +1,14 @@
+{% extends 'catalog/base.html' %}
+
+{% block content %}
+<div class="row">
+    <div >
+            <form class=" d-flex" xmlns="http://www.w3.org/1999/html" method="post">
+                <div class="flex-grow-1 ms-5">
+                    {% csrf_token %}
+                    {{form.as_p}}
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                </div>
+            </form>
+        </div>
+        {% endblock %}

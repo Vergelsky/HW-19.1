@@ -138,7 +138,7 @@ class BlogDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy("blog:blog")
     extra_context = {
         'some_text': "Какой-то текст для страницы удаления постов",
-        'title': f"Удаляем пост \"\""
+        'title': f"Удаляем пост "
     }
 
 
